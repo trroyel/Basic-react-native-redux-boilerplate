@@ -3,7 +3,7 @@ import Colors from '../constants/Colors';
 
 const DefaultNavOption = {
     headerStyle: {
-        backgroundColor: Platform.OS === 'android' ? Colors.secondary : ''
+        backgroundColor: Platform.OS === 'android' ? Colors.primary : ''
     },
     headerTitleStyle: {
         fontFamily: 'semi-bold',
@@ -11,7 +11,7 @@ const DefaultNavOption = {
     headerBackTitleStyle: {
         fontFamily: 'regular'
     },
-    headerTintColor: Platform.OS === 'android' ? Colors.default : ''
+    headerTintColor: Platform.OS === 'android' ? Colors.secondary : ''
 };
 
 export default DefaultNavOption;
