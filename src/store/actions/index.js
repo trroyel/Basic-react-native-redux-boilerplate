@@ -1,0 +1,5 @@
+export const FEATCH_INCOMES = 'FEATCH_INCOMES';
+export const ADD_INCOME = 'ADD_INCOME';
+
+export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const FEATCH_EXPENSES = 'FEATCH_EXPENSES';
