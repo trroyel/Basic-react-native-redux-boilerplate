@@ -12,12 +12,19 @@ import { SafeAreaView, StyleSheet, Text } from 'react-native';
 const App = () => {
   return (
       <SafeAreaView>
-        <Text>Text ss</Text>
+        <Text style={styles.bold}>Text ss</Text>
+        <Text style={styles.regular}>Text ss</Text>
       </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  bold: {
+    fontFamily: 'semi-bold'
+  },
+  regular: {
+    fontFamily: 'regular'
+  }
 
 });
 

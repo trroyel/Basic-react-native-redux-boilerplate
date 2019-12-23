@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* budgetappTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* budgetappTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -20,6 +19,12 @@
 		D6F23789CF23963AF29A372F /* libPods-budgetapp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A64D0FD8ECD9BE81AC690344 /* libPods-budgetapp-tvOSTests.a */; };
 		F44CD307018FF07DDF57BDA3 /* libPods-budgetapp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6B4504435735DD5C0D6A549 /* libPods-budgetapp-tvOS.a */; };
 		FDF880CEC4C214A16DB205CD /* libPods-budgetappTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 967175E5D4A8ADDE0B42E795 /* libPods-budgetappTests.a */; };
+		59ECEA7289114B0E90153B68 /* poppins-medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE8B8B868C1D46888A908BC9 /* poppins-medium.ttf */; };
+		4B0798BE04C84AE3B1D3A587 /* poppins-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE7AD6AF6B4638AB0180DF /* poppins-regular.ttf */; };
+		198AE957727E4D62930C2F09 /* poppins-semi-bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3004DA2F87DA460DB26DFAC5 /* poppins-semi-bold.ttf */; };
+		2DD0C47FC97B4AEA8D392E67 /* medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0B6C7D9A464D4327930E66D8 /* medium.ttf */; };
+		B93F28981B214711ACC280B7 /* regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DEE37FD16BD54920BB2B09F9 /* regular.ttf */; };
+		CB0FC1D1AB6D453F9FFFA106 /* semi-bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8B92B80D11A444FB479367C /* semi-bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +72,12 @@
 		CCCF26FD05B382B1502005EB /* libPods-budgetapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-budgetapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		CE8B8B868C1D46888A908BC9 /* poppins-medium.ttf */ = {isa = PBXFileReference; name = "poppins-medium.ttf"; path = "../src/assets/fonts/poppins-medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4CEE7AD6AF6B4638AB0180DF /* poppins-regular.ttf */ = {isa = PBXFileReference; name = "poppins-regular.ttf"; path = "../src/assets/fonts/poppins-regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3004DA2F87DA460DB26DFAC5 /* poppins-semi-bold.ttf */ = {isa = PBXFileReference; name = "poppins-semi-bold.ttf"; path = "../src/assets/fonts/poppins-semi-bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0B6C7D9A464D4327930E66D8 /* medium.ttf */ = {isa = PBXFileReference; name = "medium.ttf"; path = "../src/assets/fonts/medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		DEE37FD16BD54920BB2B09F9 /* regular.ttf */ = {isa = PBXFileReference; name = "regular.ttf"; path = "../src/assets/fonts/regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C8B92B80D11A444FB479367C /* semi-bold.ttf */ = {isa = PBXFileReference; name = "semi-bold.ttf"; path = "../src/assets/fonts/semi-bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +192,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				6E2DA1BFE0536C9F940AD652 /* Pods */,
+				3CDBC323BDF14B6789B6CE46 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -197,6 +209,20 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		3CDBC323BDF14B6789B6CE46 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				CE8B8B868C1D46888A908BC9 /* poppins-medium.ttf */,
+				4CEE7AD6AF6B4638AB0180DF /* poppins-regular.ttf */,
+				3004DA2F87DA460DB26DFAC5 /* poppins-semi-bold.ttf */,
+				0B6C7D9A464D4327930E66D8 /* medium.ttf */,
+				DEE37FD16BD54920BB2B09F9 /* regular.ttf */,
+				C8B92B80D11A444FB479367C /* semi-bold.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -285,7 +311,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 940;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -338,6 +364,12 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				59ECEA7289114B0E90153B68 /* poppins-medium.ttf in Resources */,
+				4B0798BE04C84AE3B1D3A587 /* poppins-regular.ttf in Resources */,
+				198AE957727E4D62930C2F09 /* poppins-semi-bold.ttf in Resources */,
+				2DD0C47FC97B4AEA8D392E67 /* medium.ttf in Resources */,
+				B93F28981B214711ACC280B7 /* regular.ttf in Resources */,
+				CB0FC1D1AB6D453F9FFFA106 /* semi-bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
