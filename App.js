@@ -8,13 +8,21 @@
 
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text } from 'react-native';
+import { Provider } from 'react-redux';
+import { screensEnabled } from 'react-native-screens';
+
+import store from './src/store/reducers/';
 
 const App = () => {
+  screensEnabled();
   return (
+    <Provider store={store}>
       <SafeAreaView>
-        <Text style={styles.bold}>Text ss</Text>
-        <Text style={styles.regular}>Text ss</Text>
+        <Text style={styles.bold} >
+          Hi, from text
+          </Text>
       </SafeAreaView>
+    </Provider>
   );
 };
 
