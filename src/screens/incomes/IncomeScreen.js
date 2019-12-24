@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { View, StyleSheet, FlatList, Alert } from 'react-native';
+import { View, StyleSheet, FlatList, Alert, ToastAndroid } from 'react-native';
 
 import Colors from '../../constants/Colors';
 import { timeDelay } from '../../constants/Config';
@@ -26,21 +26,31 @@ const IncomeScreen = (props) => {
     useEffect(() => {
         const delay = (Date.now() - updated) / 1000;
         if (incomes.length > 0 && delay <= timeDelay) return;
-        const loadIncomes = async () => {
-            setLoading(true);
-            await dispatch(fetchIncomes());
-            setLoading(false);
-        };
-        loadIncomes();
+
+        loadIncomes(setLoading);
     }, [dispatch]);
 
-    const handleRefresh= async ()=>{
-        setRefreshing(true);
-        await dispatch(fetchIncomes());
-        setRefreshing(false);
-    }
 
-    const handleDelete = id =>{
+    const loadIncomes = async (callback) => {
+        try {
+            callback(true);
+            await dispatch(fetchIncomes());
+            callback(false);
+        } catch (error) {
+            callback(false);
+            showError(error.message)
+        }
+    };
+
+    const showError = message => {
+        ToastAndroid.showWithGravity(
+            message,
+            ToastAndroid.SHORT,
+            ToastAndroid.TOP
+        );
+    };
+
+    const handleDelete = id => {
         Alert.alert('Are u sure?', 'press ok if you really want to delete', [
             { text: 'No', style: "default" },
             {
@@ -62,17 +72,17 @@ const IncomeScreen = (props) => {
                 renderItem={({ item }) => (
                     <RenderListItem
                         item={item}
-                        onDelete={handleDelete} 
+                        onDelete={handleDelete}
                     />
                 )}
                 initialNumToRender={12}
                 maxToRenderPerBatch={15}
-                onRefresh={handleRefresh}
                 refreshing={refreshing}
+                removeClippedSubviews={true}
+                onRefresh={() => loadIncomes(setRefreshing)}
                 ListEmptyComponent={ListEmptyComponent}
                 ItemSeparatorComponent={ListItemSeparator}
                 ListHeaderComponent={<ListHeader title="Income List" />}
-                removeClippedSubviews={true}
             />
         </View>
     );

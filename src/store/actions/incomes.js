@@ -12,7 +12,7 @@ export const fetchIncomes = () => {
                 incomes: incomes
             });
         } catch (error) {
-            console.log(error)
+            throw error;
         }
     };
 };
@@ -37,8 +37,8 @@ export const addIncome = (payload) => {
     };
 };
 
-export const updateIncome = (id, payload)=>{
-    return async dispatch=>{
+export const updateIncome = (id, payload) => {
+    return async dispatch => {
         try {
             const response = await fetch(`${baseUrl}/${id}`, {
                 method: 'PUT',
@@ -64,7 +64,7 @@ export const deleteIncome = id => {
                 headers: { "Content-type": "application/json; charset=UTF-8" },
             });
             const resData = await response.json();
-            console.log('Data: ',resData);
+            console.log('Data: ', resData);
             dispatch({
                 type: actions.DELETE_INCOME,
                 id: id

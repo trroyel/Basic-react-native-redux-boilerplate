@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { View, StyleSheet, FlatList, Alert } from 'react-native';
+import { View, StyleSheet, FlatList, Alert, ToastAndroid } from 'react-native';
 
 import Colors from '../../constants/Colors';
 import { timeDelay } from '../../constants/Config';
@@ -27,16 +27,22 @@ const ExpenseScreen = (props) => {
 
     useEffect(() => {
         const delay = (Date.now() - updated) / 1000;
-        console.log('Time Delay [Expenses]: ', delay);
-
         if (expenses.length > 0 && delay <= timeDelay) return;
-        const loadExpenses = async () => {
-            setLoading(true);
-            await dispatch(fetchExpenses());
-            setLoading(false);
-        };
-        loadExpenses();
+
+        loadExpenses(setLoading);
     }, [dispatch]);
+
+    //Load expenses data from actions
+    const loadExpenses = async (callback) => {
+        try {
+            callback(true);
+            await dispatch(fetchExpenses());
+            callback(false);
+        } catch (error) {
+            callback(false);
+            showError(error.message);
+        }
+    };
 
     const handleDelete = id => {
         Alert.alert('Are u sure?', 'press ok if you really want to delete', [
@@ -49,11 +55,14 @@ const ExpenseScreen = (props) => {
         ]);
     };
 
-    const handleRefresh = async () =>{
-        setRefreshing(true);
-        await dispatch(fetchExpenses());
-        setRefreshing(false);
-    }
+    const showError = message => {
+        ToastAndroid.showWithGravity(
+            message,
+            ToastAndroid.SHORT,
+            ToastAndroid.TOP
+        );
+    };
+
 
     if (loading) return <LoadingIndicator />
 
@@ -69,9 +78,9 @@ const ExpenseScreen = (props) => {
                     />
                 )}
                 initialNumToRender={12}
-                onRefresh={handleRefresh}
-                refreshing={refreshing}
                 maxToRenderPerBatch={25}
+                refreshing={refreshing}
+                onRefresh={() => loadExpenses(setRefreshing)}
                 ListEmptyComponent={ListEmptyComponent}
                 ItemSeparatorComponent={ListItemSeparator}
                 ListHeaderComponent={<ListHeader title="Expense List" />}
