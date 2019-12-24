@@ -17,7 +17,7 @@ export const fetchExpenses = () => {
     };
 };
 
-export const addExpense = (payload) => {
+export const addExpense = payload => {
     return async dispatch => {
         try {
             const response = await fetch(baseUrl, {
@@ -33,6 +33,25 @@ export const addExpense = (payload) => {
             })
         } catch (error) {
             console.log('Error: ', error)
+        }
+    };
+};
+
+export const updateExpense = (id, payload)=>{
+    return async dispatch=>{
+        try {
+            const response = await fetch(`${baseUrl}/${id}`, {
+                method: 'PUT',
+                headers: { "Content-type": "application/json; charset=UTF-8" },
+                body: JSON.stringify({ ...payload })
+            });
+            const updatedExpense = response.json();
+            dispatch({
+                type: actions.UPDATE_EXPENSE,
+                expense: updatedExpense
+            })
+        } catch (error) {
+            console.log('Error: ', error);
         }
     };
 };
