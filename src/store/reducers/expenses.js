@@ -26,6 +26,21 @@ const expenseReducer = (state = initialState, action) => {
                 expenses: state.expenses.filter(expense => expense.id !== action.id)
             };
         };
+        case actions.UPDATE_EXPENSE: {
+            const expenses = [...state.expenses];
+            const index = expenses.findIndex(expense => expense.id === action.expense.id);
+
+            if (index !== -1) {
+                expenses[index] = {
+                    ...expenses[index],
+                    ...action.expense
+                };
+            }
+            return {
+                ...state,
+                expenses: expenses
+            }
+        };
         default: return state;
     }
 };

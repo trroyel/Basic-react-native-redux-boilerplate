@@ -37,6 +37,25 @@ export const addIncome = (payload) => {
     };
 };
 
+export const updateIncome = (id, payload)=>{
+    return async dispatch=>{
+        try {
+            const response = await fetch(`${baseUrl}/${id}`, {
+                method: 'PUT',
+                headers: { "Content-type": "application/json; charset=UTF-8" },
+                body: JSON.stringify({ ...payload })
+            });
+            const updatedIncome = response.json();
+            dispatch({
+                type: actions.UPDATE_INCOME,
+                income: updatedIncome
+            })
+        } catch (error) {
+            console.log('Error: ', error);
+        }
+    };
+};
+
 export const deleteIncome = id => {
     return async dispatch => {
         try {
