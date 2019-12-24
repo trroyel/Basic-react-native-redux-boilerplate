@@ -6,7 +6,6 @@ export const fetchExpenses = () => {
         try {
             const response = await fetch(baseUrl);
             const expenses = await response.json();
-            console.log('Fetching Expenses: ', expenses.length)
 
             dispatch({
                 type: actions.FETCH_EXPENSES,
@@ -14,6 +13,45 @@ export const fetchExpenses = () => {
             })
         } catch (error) {
             console.log(error);
+        }
+    };
+};
+
+export const addExpense = (payload) => {
+    return async dispatch => {
+        try {
+            const response = await fetch(baseUrl, {
+                method: 'POST',
+                headers: { "Content-type": "application/json; charset=UTF-8" },
+                body: JSON.stringify({ ...payload })
+            });
+            const expense = await response.json();
+            console.log('New Expense: ', expense);
+            dispatch({
+                type: actions.ADD_EXPENSE,
+                expense: expense
+            })
+        } catch (error) {
+            console.log('Error: ', error)
+        }
+    };
+};
+
+export const deleteExpense = id => {
+    return async dispatch => {
+        try {
+            const response = await fetch(`${baseUrl}/${id}`, {
+                method: 'DELETE',
+                headers: { "Content-type": "application/json; charset=UTF-8" },
+            });
+            const resData = await response.json();
+            console.log('Data: ',resData);
+            dispatch({
+                type: actions.DELETE_EXPENSE,
+                id: id
+            });
+        } catch (error) {
+            console.log('Error: ', error)
         }
     };
 };

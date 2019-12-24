@@ -20,7 +20,7 @@ const MainNavigator = createDrawerNavigator({
     },
     contentOptions: {
         activeTintColor: Colors.secondary,
-        inactiveTintColor: Colors.accent,
+        inactiveTintColor: Colors.fade,
         labelStyle: {
             fontFamily: 'semi-bold',
             fontSize: 16,

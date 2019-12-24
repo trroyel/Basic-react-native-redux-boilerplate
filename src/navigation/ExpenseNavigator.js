@@ -5,7 +5,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { expense } from '../constants/Icons';
 import ExpenseScreen from '../screens/expenses/ExpenseScreen';
 import DefaultNavigationOption from './DefaultNavigationOption';
-import AddExpenseScreen from '../screens/expenses/AddExpenseButton';
+import AddExpenseScreen from '../screens/expenses/AddExpenseScreen';
 
 const ExpenseNavigator = createStackNavigator({
     Expense: ExpenseScreen,

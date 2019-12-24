@@ -12,7 +12,7 @@ const ListHeader = ({title}) => (
 const styles = StyleSheet.create({
     container: {
         paddingVertical: 5,
-        marginHorizontal: 15,
+        paddingHorizontal: 15,
         borderBottomColor: Colors.accent,
         borderBottomWidth: 1
     },

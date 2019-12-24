@@ -4,15 +4,12 @@ import { View, StyleSheet, Image, Platform, TouchableOpacity, TouchableNativeFee
 const HeaderButton = ({ onPress, size, icon, color }) => {
     let TouchableComponent = TouchableOpacity;
 
-    if (Platform.OS === 'android' && Platform.Version >= 22) {
+    if (Platform.OS === 'android' && Platform.Version >= 21) {
         TouchableComponent = TouchableNativeFeedback;
     }
 
     return (
-        <TouchableComponent
-            hitSlop={styles.hitSlop}
-            onPress={onPress}
-        >
+        <TouchableComponent useForeground onPress={onPress}>
             <View style={{ ...styles.container, height: size, width: size }}>
                 <Image
                     style={{ height: size, width: size, tintColor: color }}
@@ -28,12 +25,6 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         alignItems: 'center',
         justifyContent: 'center'
-    },
-    hitSlop: {
-        top: 20, 
-        bottom: 20,
-         left: 20,
-          right: 20
     }
 });
 

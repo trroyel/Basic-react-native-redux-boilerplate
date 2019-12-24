@@ -3,21 +3,21 @@ import { useDispatch } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
 
 import { income } from '../../constants/Icons';
-import { addIncome } from '../../store/actions/incomes';
+import { addExpense } from '../../store/actions/expenses';
 import { MainButton, InputTextWithIcon } from '../../components/ui';
 
-const AddIncomeScreen = props => {
+const AddExpenseScreen = props => {
     const [title, setTitle] = useState('');
-    const [body, setBody] = useState('');
+    const [completed, setCompleted] = useState('');
 
     const dispatch = useDispatch();
 
     const handleSubmit = async () => {
-        console.log('Title: ', title, " Body: ", body);
-        await dispatch(addIncome({
+        console.log('Title: ', title, " Completed: ", completed);
+        await dispatch(addExpense({
                 userId: 1,
                 title: title,
-                body: body
+                completed: completed
             }));
         props.navigation.popToTop();
     };
@@ -29,15 +29,15 @@ const AddIncomeScreen = props => {
                 icon={income}
                 value={title}
                 label="Enter title"
-                placeholder="Today's post"
+                placeholder="Today's expense"
                 onChangeText={setTitle}
             />
             <InputTextWithIcon
                 icon={income}
-                value={body}
-                label="Enter body"
-                placeholder="Today's post"
-                onChangeText={setBody}
+                value={completed}
+                label="Enter completion status"
+                placeholder="Completion status"
+                onChangeText={setCompleted}
             />
 
             <MainButton
@@ -48,7 +48,7 @@ const AddIncomeScreen = props => {
     );
 };
 
-AddIncomeScreen.navigationOptions = {
+AddExpenseScreen.navigationOptions = {
     title: 'Add Income'
 };
 
@@ -60,4 +60,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default AddIncomeScreen;
+export default AddExpenseScreen;
