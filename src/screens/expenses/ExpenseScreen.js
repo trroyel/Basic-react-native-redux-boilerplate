@@ -63,6 +63,14 @@ const ExpenseScreen = (props) => {
         );
     };
 
+    const handleItemLayout = (data, index) => {
+        return {
+            length: 40.5,
+            offset: 40.5 * index,
+            index
+        }
+    };
+
 
     if (loading) return <LoadingIndicator />
 
@@ -70,16 +78,18 @@ const ExpenseScreen = (props) => {
         <View style={styles.screen}>
             <FlatList
                 data={expenses}
-                keyExtractor={item => String(item.id)}
+                keyExtractor={item => 'key' + item.id}
                 renderItem={({ item }) => (
                     <RenderListItem
                         item={item}
                         onDelete={handleDelete}
                     />
                 )}
-                initialNumToRender={12}
-                maxToRenderPerBatch={25}
+                initialNumToRender={20}
+                maxToRenderPerBatch={30}
                 refreshing={refreshing}
+                removeClippedSubviews={true}
+                getItemLayout={handleItemLayout}
                 onRefresh={() => loadExpenses(setRefreshing)}
                 ListEmptyComponent={ListEmptyComponent}
                 ItemSeparatorComponent={ListItemSeparator}

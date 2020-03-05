@@ -16,7 +16,7 @@ const RenderListItem = ({ item, onDelete }) => (
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        height: 40,
         flexDirection: 'row',
         alignItems: 'center',
         marginHorizontal: 10,

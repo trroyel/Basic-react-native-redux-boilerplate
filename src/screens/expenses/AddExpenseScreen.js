@@ -13,7 +13,6 @@ const AddExpenseScreen = props => {
     const dispatch = useDispatch();
 
     const handleSubmit = async () => {
-        console.log('Title: ', title, " Completed: ", completed);
         await dispatch(addExpense({
                 userId: 1,
                 title: title,
