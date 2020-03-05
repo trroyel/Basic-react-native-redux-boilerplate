@@ -1,5 +1,5 @@
-export const plus = require('../assets/icons/plus.png');
-export const menu = require('../assets/icons/menu.png');
-export const home = require('../assets/icons/home.png');
-export const income = require('../assets/icons/income.png');
-export const expense = require('../assets/icons/expense.png');
+export const plusIcon = require('../assets/icons/plus-icon.png');
+export const menuIcon = require('../assets/icons/menu-icon.png');
+export const homeIcon = require('../assets/icons/home-icon.png');
+export const postIcon = require('../assets/icons/post-icon.png');
+export const todoIcon = require('../assets/icons/todo-icon.png');

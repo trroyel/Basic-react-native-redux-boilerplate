@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { View, StyleSheet, FlatList, Alert, ToastAndroid } from 'react-native';
+import { View, StyleSheet, FlatList, Alert } from 'react-native';
 
 import Colors from '../../constants/Colors';
 import { timeDelay } from '../../constants/Config';
-import { menu, plus } from '../../constants/Icons';
-import { fetchExpenses, deleteExpense } from '../../store/actions/expenses';
+import { menuIcon, plusIcon } from '../../constants/Icons';
+import { fetchTodos, deleteTodo } from '../../store/actions/todos';
 import {
     ListHeader,
     HeaderButton,
@@ -16,32 +16,27 @@ import {
 } from '../../components/ui';
 
 
-const ExpenseScreen = (props) => {
+const TodoScreen = (props) => {
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
 
-    const updated = useSelector(state => state.expenses.updated);
-    const expenses = useSelector(state => state.expenses.expenses);
+    const updated = useSelector(state => state.todos.updated);
+    const todos = useSelector(state => state.todos.todos);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         const delay = (Date.now() - updated) / 1000;
-        if (expenses.length > 0 && delay <= timeDelay) return;
+        if (todos.length > 0 && delay <= timeDelay) return;
 
-        loadExpenses(setLoading);
+        loadTodos(setLoading);
     }, [dispatch]);
 
     //Load expenses data from actions
-    const loadExpenses = async (callback) => {
-        try {
-            callback(true);
-            await dispatch(fetchExpenses());
-            callback(false);
-        } catch (error) {
-            callback(false);
-            showError(error.message);
-        }
+    const loadTodos = async (callback) => {
+        callback(true);
+        await dispatch(fetchTodos());
+        callback(false);
     };
 
     const handleDelete = id => {
@@ -50,17 +45,9 @@ const ExpenseScreen = (props) => {
             {
                 text: 'Yes',
                 style: "destructive",
-                onPress: () => dispatch(deleteExpense(id))
+                onPress: () => dispatch(deleteTodo(id))
             }
         ]);
-    };
-
-    const showError = message => {
-        ToastAndroid.showWithGravity(
-            message,
-            ToastAndroid.SHORT,
-            ToastAndroid.TOP
-        );
     };
 
     const handleItemLayout = (data, index) => {
@@ -68,7 +55,7 @@ const ExpenseScreen = (props) => {
             length: 40.5,
             offset: 40.5 * index,
             index
-        }
+        };
     };
 
 
@@ -77,7 +64,7 @@ const ExpenseScreen = (props) => {
     return (
         <View style={styles.screen}>
             <FlatList
-                data={expenses}
+                data={todos}
                 keyExtractor={item => 'key' + item.id}
                 renderItem={({ item }) => (
                     <RenderListItem
@@ -90,21 +77,21 @@ const ExpenseScreen = (props) => {
                 refreshing={refreshing}
                 removeClippedSubviews={true}
                 getItemLayout={handleItemLayout}
-                onRefresh={() => loadExpenses(setRefreshing)}
+                onRefresh={() => loadTodos(setRefreshing)}
                 ListEmptyComponent={ListEmptyComponent}
                 ItemSeparatorComponent={ListItemSeparator}
-                ListHeaderComponent={<ListHeader title="Expense List" />}
+                ListHeaderComponent={<ListHeader title="Todo List" />}
             />
         </View>
     );
 };
 
-ExpenseScreen.navigationOptions = ({ navigation }) => {
+TodoScreen.navigationOptions = ({ navigation }) => {
     return {
-        title: 'Expense',
+        title: 'Todos',
         headerLeft: (
             <HeaderButton
-                icon={menu}
+                icon={menuIcon}
                 size={24}
                 color={Colors.secondary}
                 onPress={() => navigation.toggleDrawer()}
@@ -112,10 +99,10 @@ ExpenseScreen.navigationOptions = ({ navigation }) => {
         ),
         headerRight: (
             <HeaderButton
-                icon={plus}
+                icon={plusIcon}
                 size={20}
                 color={Colors.secondary}
-                onPress={() => navigation.navigate('AddExpense')}
+                onPress={() => navigation.navigate('AddTodo')}
             />
         )
     }
@@ -128,4 +115,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default ExpenseScreen;
+export default TodoScreen;

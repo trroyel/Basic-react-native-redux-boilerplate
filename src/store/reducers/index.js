@@ -2,12 +2,12 @@ import reduxThunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 
-import incomeReducer from './incomes';
-import expenseReducer from './expenses';
+import postReducer from './posts';
+import todoReducer from './todos';
 
 const rootReducer = combineReducers({
-    incomes: incomeReducer,
-    expenses: expenseReducer
+    posts: postReducer,
+    todos: todoReducer
 });
 
 const store = createStore(rootReducer, composeWithDevTools(

@@ -1,10 +1,10 @@
 import React from 'react';
-import {Image} from 'react-native';
+import { Image } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 
 import HomeScreen from '../screens/home/HomeScreen';
 import DefaultNavigationOption from './DefaultNavigationOption';
-import { home } from '../constants/Icons';
+import { homeIcon } from '../constants/Icons';
 
 const HomeNavigator = createStackNavigator({
     Home: HomeScreen
@@ -13,7 +13,7 @@ const HomeNavigator = createStackNavigator({
         drawerIcon: ({ tintColor }) => (
             <Image
                 style={{ height: 30, width: 30, tintColor: tintColor }}
-                source={home}
+                source={homeIcon}
             />
         )
     },

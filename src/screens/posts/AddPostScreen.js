@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
 
 import { income } from '../../constants/Icons';
-import { addIncome } from '../../store/actions/incomes';
+import { addIncome } from '../../store/actions/posts';
 import { MainButton, InputTextWithIcon } from '../../components/ui';
 
 const AddIncomeScreen = props => {
@@ -13,12 +13,11 @@ const AddIncomeScreen = props => {
     const dispatch = useDispatch();
 
     const handleSubmit = async () => {
-        console.log('Title: ', title, " Body: ", body);
         await dispatch(addIncome({
-                userId: 1,
-                title: title,
-                body: body
-            }));
+            userId: 1,
+            title: title,
+            body: body
+        }));
         props.navigation.popToTop();
     };
 
@@ -29,14 +28,14 @@ const AddIncomeScreen = props => {
                 icon={income}
                 value={title}
                 label="Enter title"
-                placeholder="Today's post"
+                placeholder="Post title"
                 onChangeText={setTitle}
             />
             <InputTextWithIcon
                 icon={income}
                 value={body}
                 label="Enter body"
-                placeholder="Today's post"
+                placeholder="Post body"
                 onChangeText={setBody}
             />
 
@@ -49,7 +48,7 @@ const AddIncomeScreen = props => {
 };
 
 AddIncomeScreen.navigationOptions = {
-    title: 'Add Income'
+    title: 'Add Posts'
 };
 
 const styles = StyleSheet.create({

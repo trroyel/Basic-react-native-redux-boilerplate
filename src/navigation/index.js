@@ -3,15 +3,15 @@ import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 
 import HomeNavigator from './HomeNavigator';
-import IncomeNavigator from './IncomeNavigator';
-import ExpenseNavigator from './ExpenseNavigator';
+import TodoNavigator from './TodoNavigator';
+import PostNavigator from './PostNavigator';
 
 import Colors from '../constants/Colors';
 
 const MainNavigator = createDrawerNavigator({
     Home: HomeNavigator,
-    Incomes: IncomeNavigator,
-    Expenses: ExpenseNavigator
+    Posts: PostNavigator,
+    Todos: TodoNavigator
 }, {
     unmountInactiveRoutes: true,
     drawerBackgroundColor: Colors.primary,

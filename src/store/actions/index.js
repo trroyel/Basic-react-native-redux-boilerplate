@@ -1,9 +1,9 @@
-export const FETCH_INCOMES = 'FETCH_INCOMES';
-export const ADD_INCOME = 'ADD_INCOME';
-export const DELETE_INCOME = 'DELETE_INCOME';
-export const UPDATE_INCOME = 'UPDATE_INCOME';
+export const FETCH_POSTS = 'FETCH_POSTS';
+export const ADD_POST = 'ADD_POST';
+export const DELETE_POST = 'DELETE_POST';
+export const UPDATE_POST = 'UPDATE_POST';
 
-export const ADD_EXPENSE = 'ADD_EXPENSE';
-export const FETCH_EXPENSES = 'FETCH_EXPENSES';
-export const DELETE_EXPENSE = 'DELETE_EXPENSE';
-export const UPDATE_EXPENSE = 'UPDATE_EXPENSE';
+export const ADD_TODO = 'ADD_TODO';
+export const FETCH_TODOS = 'FETCH_TODOS';
+export const DELETE_TODO = 'DELETE_TODO';
+export const UPDATE_TODO = 'UPDATE_TODO';

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { View, StyleSheet, FlatList, Alert, ToastAndroid } from 'react-native';
+import { View, StyleSheet, FlatList, Alert } from 'react-native';
 
 import Colors from '../../constants/Colors';
 import { timeDelay } from '../../constants/Config';
-import { menu, plus } from '../../constants/Icons';
-import { fetchIncomes, deleteIncome } from '../../store/actions/incomes';
+import { menuIcon, plusIcon } from '../../constants/Icons';
+import { fetchPosts, deletePost } from '../../store/actions/posts';
 import {
     ListHeader,
     HeaderButton,
@@ -15,39 +15,26 @@ import {
     ListEmptyComponent
 } from '../../components/ui';
 
-const IncomeScreen = (props) => {
+const postsScreen = (props) => {
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
-    const updated = useSelector(state => state.incomes.updated);
-    const incomes = useSelector(state => state.incomes.incomes);
+    const updated = useSelector(state => state.posts.updated);
+    const posts = useSelector(state => state.posts.posts);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         const delay = (Date.now() - updated) / 1000;
-        if (incomes.length > 0 && delay <= timeDelay) return;
+        if (posts.length > 0 && delay <= timeDelay) return;
 
-        loadIncomes(setLoading);
+        loadPosts(setLoading);
     }, [dispatch]);
 
 
-    const loadIncomes = async (callback) => {
-        try {
-            callback(true);
-            await dispatch(fetchIncomes());
-            callback(false);
-        } catch (error) {
-            callback(false);
-            showError(error.message)
-        }
-    };
-
-    const showError = message => {
-        ToastAndroid.showWithGravity(
-            message,
-            ToastAndroid.SHORT,
-            ToastAndroid.TOP
-        );
+    const loadPosts = async (callback) => {
+        callback(true);
+        await dispatch(fetchPosts());
+        callback(false);
     };
 
     const handleDelete = id => {
@@ -56,7 +43,7 @@ const IncomeScreen = (props) => {
             {
                 text: 'Yes',
                 style: "destructive",
-                onPress: () => dispatch(deleteIncome(id))
+                onPress: () => dispatch(deletePost(id))
             }
         ]);
     };
@@ -67,7 +54,7 @@ const IncomeScreen = (props) => {
     return (
         <View style={styles.screen}>
             <FlatList
-                data={incomes}
+                data={posts}
                 keyExtractor={item => 'key' + item.id}
                 renderItem={({ item }) => (
                     <RenderListItem
@@ -79,21 +66,21 @@ const IncomeScreen = (props) => {
                 maxToRenderPerBatch={15}
                 refreshing={refreshing}
                 removeClippedSubviews={true}
-                onRefresh={() => loadIncomes(setRefreshing)}
+                onRefresh={() => loadPosts(setRefreshing)}
                 ListEmptyComponent={ListEmptyComponent}
                 ItemSeparatorComponent={ListItemSeparator}
-                ListHeaderComponent={<ListHeader title="Income List" />}
+                ListHeaderComponent={<ListHeader title="Posts List" />}
             />
         </View>
     );
 };
 
-IncomeScreen.navigationOptions = ({ navigation }) => {
+postsScreen.navigationOptions = ({ navigation }) => {
     return {
-        title: 'Income',
+        title: 'Posts',
         headerLeft: (
             <HeaderButton
-                icon={menu}
+                icon={menuIcon}
                 size={24}
                 color={Colors.secondary}
                 onPress={() => navigation.toggleDrawer()}
@@ -101,10 +88,10 @@ IncomeScreen.navigationOptions = ({ navigation }) => {
         ),
         headerRight: (
             <HeaderButton
-                icon={plus}
+                icon={plusIcon}
                 size={20}
                 color={Colors.secondary}
-                onPress={() => navigation.navigate('AddIncome')}
+                onPress={() => navigation.navigate('AddPost')}
             />
         )
     }
@@ -120,4 +107,4 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10
     }
 });
-export default IncomeScreen;
+export default postsScreen;

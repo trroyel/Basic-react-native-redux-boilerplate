@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { HeaderButton } from '../../components/ui';
 import Colors from '../../constants/Colors';
-import { menu } from '../../constants/Icons';
+import { menuIcon } from '../../constants/Icons';
 
 const HomeScreen = (props) => {
     return (
@@ -17,7 +17,7 @@ HomeScreen.navigationOptions = ({ navigation }) => {
         title: "Home",
         headerLeft: (
             <HeaderButton
-                icon={menu}
+                icon={menuIcon}
                 size={24}
                 color={Colors.secondary}
                 onPress={() => navigation.toggleDrawer()}

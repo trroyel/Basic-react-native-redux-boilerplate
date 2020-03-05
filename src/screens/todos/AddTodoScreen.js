@@ -3,10 +3,10 @@ import { useDispatch } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
 
 import { income } from '../../constants/Icons';
-import { addExpense } from '../../store/actions/expenses';
+import { addExpense } from '../../store/actions/todos';
 import { MainButton, InputTextWithIcon } from '../../components/ui';
 
-const AddExpenseScreen = props => {
+const AddTodoScreen = props => {
     const [title, setTitle] = useState('');
     const [completed, setCompleted] = useState('');
 
@@ -14,10 +14,10 @@ const AddExpenseScreen = props => {
 
     const handleSubmit = async () => {
         await dispatch(addExpense({
-                userId: 1,
-                title: title,
-                completed: completed
-            }));
+            userId: 1,
+            title: title,
+            completed: completed
+        }));
         props.navigation.popToTop();
     };
 
@@ -28,7 +28,7 @@ const AddExpenseScreen = props => {
                 icon={income}
                 value={title}
                 label="Enter title"
-                placeholder="Today's expense"
+                placeholder="Title"
                 onChangeText={setTitle}
             />
             <InputTextWithIcon
@@ -47,8 +47,8 @@ const AddExpenseScreen = props => {
     );
 };
 
-AddExpenseScreen.navigationOptions = {
-    title: 'Add Income'
+AddTodoScreen.navigationOptions = {
+    title: 'Add Todo'
 };
 
 const styles = StyleSheet.create({
@@ -59,4 +59,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default AddExpenseScreen;
+export default AddTodoScreen;
