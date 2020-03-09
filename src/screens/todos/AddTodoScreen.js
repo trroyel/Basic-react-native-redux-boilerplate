@@ -2,22 +2,25 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
 
-import { income } from '../../constants/Icons';
-import { addExpense } from '../../store/actions/todos';
+import { todoIcon } from '../../constants/Icons';
+import { addTodo } from '../../store/actions/todos';
 import { MainButton, InputTextWithIcon } from '../../components/ui';
 
 const AddTodoScreen = props => {
     const [title, setTitle] = useState('');
     const [completed, setCompleted] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const dispatch = useDispatch();
 
     const handleSubmit = async () => {
-        await dispatch(addExpense({
+        setLoading(true);
+        await dispatch(addTodo({
             userId: 1,
             title: title,
             completed: completed
         }));
+        setLoading(false);
         props.navigation.popToTop();
     };
 
@@ -25,14 +28,14 @@ const AddTodoScreen = props => {
         <View style={styles.screen}>
             <InputTextWithIcon
                 autoFocus
-                icon={income}
+                icon={todoIcon}
                 value={title}
                 label="Enter title"
                 placeholder="Title"
                 onChangeText={setTitle}
             />
             <InputTextWithIcon
-                icon={income}
+                icon={todoIcon}
                 value={completed}
                 label="Enter completion status"
                 placeholder="Completion status"
@@ -40,8 +43,10 @@ const AddTodoScreen = props => {
             />
 
             <MainButton
+                disabled = {loading}
+                loading={loading}
                 title="ADD"
-                onPress={() => handleSubmit()}
+                onPress={handleSubmit}
             />
         </View>
     );

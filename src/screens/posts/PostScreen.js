@@ -18,6 +18,8 @@ import {
 const postsScreen = (props) => {
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
+    const [deleteLoading, setDeleteLoading] = useState(false);
+
     const updated = useSelector(state => state.posts.updated);
     const posts = useSelector(state => state.posts.posts);
 
@@ -30,6 +32,9 @@ const postsScreen = (props) => {
         loadPosts(setLoading);
     }, [dispatch]);
 
+    useEffect(()=>{
+        props.navigation.setParams({ loading: deleteLoading });
+    }, [deleteLoading]);
 
     const loadPosts = async (callback) => {
         callback(true);
@@ -43,7 +48,11 @@ const postsScreen = (props) => {
             {
                 text: 'Yes',
                 style: "destructive",
-                onPress: () => dispatch(deletePost(id))
+                onPress: async () => {
+                    setDeleteLoading(true);
+                    await dispatch(deletePost(id));
+                    setDeleteLoading(false);
+                }
             }
         ]);
     };
@@ -58,6 +67,7 @@ const postsScreen = (props) => {
                 keyExtractor={item => 'key' + item.id}
                 renderItem={({ item }) => (
                     <RenderListItem
+                        loading={deleteLoading}
                         item={item}
                         onDelete={handleDelete}
                     />
@@ -76,6 +86,8 @@ const postsScreen = (props) => {
 };
 
 postsScreen.navigationOptions = ({ navigation }) => {
+    const loading = navigation.getParam('loading');
+
     return {
         title: 'Posts',
         headerLeft: (
@@ -89,6 +101,7 @@ postsScreen.navigationOptions = ({ navigation }) => {
         headerRight: (
             <HeaderButton
                 icon={plusIcon}
+                loading={loading}
                 size={20}
                 color={Colors.secondary}
                 onPress={() => navigation.navigate('AddPost')}

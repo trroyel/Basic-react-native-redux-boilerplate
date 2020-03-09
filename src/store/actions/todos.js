@@ -1,5 +1,5 @@
 import * as actions from './index';
-import { showError } from '../../helpers';
+import { showError } from '../../helpers/ToastHelper';
 import { baseUrl } from '../../constants/Config';
 
 const todosUrl = `${baseUrl}/todos`;

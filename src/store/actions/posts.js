@@ -1,13 +1,14 @@
 import * as actions from './index';
-import { showError } from '../../helpers';
-import { baseUrl } from '../../constants/Config';
-
-const postUrl = `${baseUrl}/posts`;
+import Routes from '../../constants/Routes';
+import { showToast } from '../../helpers/ToastHelper';
+import * as ApiCaller from '../../helpers/ApiCaller';
 
 export const fetchPosts = () => {
     return async dispatch => {
         try {
-            const response = await fetch(postUrl);
+            const response = await ApiCaller.get(Routes.posts);
+            if (!response.ok) return Promise.reject(response.status);
+
             const posts = await response.json();
 
             dispatch({
@@ -15,26 +16,25 @@ export const fetchPosts = () => {
                 posts: Array.isArray(posts) ? posts : []
             });
         } catch (error) {
-            showError(error.message);
+            showToast(error.message);
         }
     };
 };
 
-export const addPost = (payload) => {
+export const addPost = payload => {
     return async dispatch => {
         try {
-            const response = await fetch(postUrl, {
-                method: 'POST',
-                headers: { "Content-type": "application/json; charset=UTF-8" },
-                body: JSON.stringify({ ...payload })
-            });
+            const response = await ApiCaller.post(Routes.posts, payload);
+            if (!response.ok) return Promise.reject(response.status);
+
             const post = await response.json();
+
             dispatch({
                 type: actions.ADD_POST,
                 post: post
             })
         } catch (error) {
-            showError(error.message);
+            showToast(error.message);
         }
     };
 };
@@ -42,18 +42,17 @@ export const addPost = (payload) => {
 export const updatePost = (id, payload) => {
     return async dispatch => {
         try {
-            const response = await fetch(`${postUrl}/${id}`, {
-                method: 'PUT',
-                headers: { "Content-type": "application/json; charset=UTF-8" },
-                body: JSON.stringify({ ...payload })
-            });
-            const updatedPost = response.json();
+            const response = await ApiCaller.put(Routes.posts, id, payload);
+            if (!response.ok) return Promise.reject(response.status);
+
+            const updatedPost = await response.json();
+
             dispatch({
                 type: actions.UPDATE_POST,
                 post: updatedPost
             })
         } catch (error) {
-            showError(error.message);
+            showToast(error.message);
         }
     };
 };
@@ -61,17 +60,17 @@ export const updatePost = (id, payload) => {
 export const deletePost = id => {
     return async dispatch => {
         try {
-            const response = await fetch(`${postUrl}/${id}`, {
-                method: 'DELETE',
-                headers: { "Content-type": "application/json; charset=UTF-8" },
-            });
-            const resData = await response.json();
-            dispatch({
-                type: actions.DELETE_POST,
-                id: id
-            });
+            const response = await ApiCaller.del(Routes.posts, id);
+            if (response.ok) {
+                dispatch({
+                    type: actions.DELETE_POST,
+                    id: id
+                })
+            } else {
+                return Promise.reject(response.status)
+            }
         } catch (error) {
-            showError(error.message);
+            showToast(error.message);
         }
     };
 };

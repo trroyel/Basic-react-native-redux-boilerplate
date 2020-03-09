@@ -2,11 +2,12 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Colors from '../../constants/Colors';
 
-const RenderListItem = ({ item, onDelete }) => (
+const RenderListItem = ({ item, onDelete, loading }) => (
     <View style={styles.container}>
         <Text style={styles.left}>{item.id}</Text>
         <Text style={styles.middle} numberOfLines={1} ellipsizeMode='tail'>{item.title}</Text>
         <TouchableOpacity
+            disabled={loading}
             style={styles.right}
             onPress={() => onDelete(item.id)}>
             <Text style={styles.rightText}>x</Text>

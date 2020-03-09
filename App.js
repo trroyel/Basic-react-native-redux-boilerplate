@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { SafeAreaView, StatusBar } from 'react-native';
 import { screensEnabled } from 'react-native-screens';
 
-import store from './src/store/reducers/';
+import store from './src/store/';
 import MainNavigator from './src/navigation/';
 import Colors from './src/constants/Colors';
 
