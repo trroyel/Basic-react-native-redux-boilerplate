@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-import Colors from '../../constants/Colors';
+import {Colors, Fonts} from '../../constants/';
 
 const ListHeader = ({title}) => (
     <View style={styles.container}>
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1
     },
     title: {
-        fontFamily: 'semi-bold',
+        fontFamily: Fonts.bold,
         fontSize: 20
     }
 });

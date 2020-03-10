@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
 
+import Strings from '../../constants/Strings';
 import { todoIcon } from '../../constants/Icons';
 import { addTodo } from '../../store/actions/todos';
-import { MainButton, InputTextWithIcon } from '../../components/ui';
+import { ButtonWithIcon, InputTextWithIcon } from '../../components/ui';
 
 const AddTodoScreen = props => {
     const [title, setTitle] = useState('');
@@ -30,22 +31,21 @@ const AddTodoScreen = props => {
                 autoFocus
                 icon={todoIcon}
                 value={title}
-                label="Enter title"
-                placeholder="Title"
+                label={Strings.addTodoInputTitleLabel}
+                placeholder={Strings.addTodoInputTitlePlaceholder}
                 onChangeText={setTitle}
             />
             <InputTextWithIcon
                 icon={todoIcon}
                 value={completed}
-                label="Enter completion status"
-                placeholder="Completion status"
+                label={Strings.addTodoInputCompletionLabel}
+                placeholder={Strings.addTodoInputCompletionPlaceholder}
                 onChangeText={setCompleted}
             />
 
-            <MainButton
-                disabled = {loading}
+            <ButtonWithIcon
+                title={Strings.add}
                 loading={loading}
-                title="ADD"
                 onPress={handleSubmit}
             />
         </View>
@@ -53,7 +53,7 @@ const AddTodoScreen = props => {
 };
 
 AddTodoScreen.navigationOptions = {
-    title: 'Add Todo'
+    title: Strings.addTodoScreenNavTitle
 };
 
 const styles = StyleSheet.create({

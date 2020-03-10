@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-import Colors from '../../constants/Colors';
+import {Colors, Fonts} from '../../constants/';
 
 const MainButton = ({ title, style, ...rest }) => {
     return (
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
     buttonText: {
-        fontFamily: 'open-sans-bold',
+        fontFamily: Fonts.bold,
         color: Colors.secondary,
         textAlign: 'center',
         fontSize: 18,

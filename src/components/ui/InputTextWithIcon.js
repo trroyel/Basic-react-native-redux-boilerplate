@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, TextInput, Text, Image } from 'react-native';
 
-import Colors from '../../constants/Colors';
+import {Colors, Fonts} from '../../constants/';
 
 const InputTextwithIcon = ({ icon, error, label, ...rest }) => {
     const color = error ? Colors.danger : Colors.primary;
@@ -9,6 +9,7 @@ const InputTextwithIcon = ({ icon, error, label, ...rest }) => {
     return (
         <View style={styles.container}>
             {label ? <Text style={styles.label}>{label}</Text>: null}
+            
             <View style={{ ...styles.formControl, borderColor: color }}>
                 <View style={styles.iconContainer}>
                     <Image
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
         flex: 6
     },
     input: {
-        fontFamily: 'open-sans',
+        fontFamily: Fonts.regular,
         fontSize: 22,
         paddingRight: 5,
         backgroundColor: 'transparent'
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
         width: 24,
     },
     error: {
-        fontFamily: "open-sans",
+        fontFamily: Fonts.regular,
         fontSize: 16,
         color: Colors.danger,
         paddingLeft: 2

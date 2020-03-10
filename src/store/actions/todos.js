@@ -1,13 +1,14 @@
 import * as actions from './index';
-import { showError } from '../../helpers/ToastHelper';
-import { baseUrl } from '../../constants/Config';
-
-const todosUrl = `${baseUrl}/todos`;
+import Routes from '../../constants/Routes';
+import { showToast } from '../../helpers/ToastHelper';
+import * as ApiCaller from '../../helpers/ApiCaller';
 
 export const fetchTodos = () => {
     return async dispatch => {
         try {
-            const response = await fetch(todosUrl);
+            const response = await ApiCaller.get(Routes.todos);
+            if (!response.ok) return Promise.reject(response.status);
+
             const todos = await response.json();
 
             dispatch({
@@ -15,7 +16,7 @@ export const fetchTodos = () => {
                 todos: Array.isArray(todos) ? todos : []
             });
         } catch (error) {
-            showError(error.message);
+            showToast(error.message);
         }
     };
 };
@@ -23,11 +24,9 @@ export const fetchTodos = () => {
 export const addTodo = payload => {
     return async dispatch => {
         try {
-            const response = await fetch(todosUrl, {
-                method: 'POST',
-                headers: { "Content-type": "application/json; charset=UTF-8" },
-                body: JSON.stringify({ ...payload })
-            });
+            const response = await ApiCaller.post(Routes.todos, payload);
+            if (!response.ok) return Promise.reject(response.status);
+
             const todo = await response.json();
 
             dispatch({
@@ -35,7 +34,7 @@ export const addTodo = payload => {
                 todo: todo
             });
         } catch (error) {
-            showError(error.message);
+            showToast(error.message);
         }
     };
 };
@@ -43,18 +42,17 @@ export const addTodo = payload => {
 export const updatetodo = (id, payload) => {
     return async dispatch => {
         try {
-            const response = await fetch(`${todosUrl}/${id}`, {
-                method: 'PUT',
-                headers: { "Content-type": "application/json; charset=UTF-8" },
-                body: JSON.stringify({ ...payload })
-            });
+            const response = await ApiCaller.put(Routes.todos, id, payload);
+            if (!response.ok) return Promise.reject(response.status);
+
             const updatedtodo = response.json();
+
             dispatch({
                 type: actions.UPDATE_TODO,
                 todo: updatedtodo
             });
         } catch (error) {
-            showError(error.message);
+            showToast(error.message);
         }
     };
 };
@@ -62,17 +60,17 @@ export const updatetodo = (id, payload) => {
 export const deleteTodo = id => {
     return async dispatch => {
         try {
-            const response = await fetch(`${todosUrl}/${id}`, {
-                method: 'DELETE',
-                headers: { "Content-type": "application/json; charset=UTF-8" },
-            });
-            const resData = await response.json();
-            dispatch({
-                type: actions.DELETE_TODO,
-                id: id
-            });
+            const response = await ApiCaller.del(Routes.todos, id);
+            if (response.ok) {
+                dispatch({
+                    type: actions.DELETE_TODO,
+                    id: id
+                });
+            } else {
+                return Promise.reject(response.status);
+            }
         } catch (error) {
-            showError(error.message);
+            showToast(error.message);
         }
     };
 };

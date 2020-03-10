@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { View, StyleSheet, FlatList, Alert } from 'react-native';
 
-import Colors from '../../constants/Colors';
-import { timeDelay } from '../../constants/Config';
+import { Colors, Config, Strings } from '../../constants/';
 import { menuIcon, plusIcon } from '../../constants/Icons';
 import { fetchTodos, deleteTodo } from '../../store/actions/todos';
 import {
@@ -19,18 +18,23 @@ import {
 const TodoScreen = (props) => {
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
+    const [deleteLoading, setDeleteLoading] = useState(false);
 
-    const updated = useSelector(state => state.todos.updated);
     const todos = useSelector(state => state.todos.todos);
+    const updatedAt = useSelector(state => state.todos.updatedAt);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const delay = (Date.now() - updated) / 1000;
-        if (todos.length > 0 && delay <= timeDelay) return;
+        const delay = (Date.now() - updatedAt) / 1000;
+        if (todos.length > 0 && delay <= Config.timeDelay) return;
 
         loadTodos(setLoading);
     }, [dispatch]);
+
+    useEffect(() => {
+        props.navigation.setParams({ loading: deleteLoading });
+    }, [deleteLoading]);
 
     //Load expenses data from actions
     const loadTodos = async (callback) => {
@@ -40,12 +44,16 @@ const TodoScreen = (props) => {
     };
 
     const handleDelete = id => {
-        Alert.alert('Are u sure?', 'press ok if you really want to delete', [
-            { text: 'No', style: "default" },
+        Alert.alert(Strings.deleteAlertTitle, Strings.deleteAlertInstruction, [
+            { text: Strings.no, style: "default" },
             {
-                text: 'Yes',
+                text: Strings.yes,
                 style: "destructive",
-                onPress: () => dispatch(deleteTodo(id))
+                onPress: async () => {
+                    setDeleteLoading(true);
+                    await dispatch(deleteTodo(id));
+                    setDeleteLoading(false);
+                }
             }
         ]);
     };
@@ -58,6 +66,12 @@ const TodoScreen = (props) => {
         };
     };
 
+    const handleRenderItem = ({ item }) => (
+        <RenderListItem
+            item={item}
+            onDelete={handleDelete}
+        />
+    );
 
     if (loading) return <LoadingIndicator />
 
@@ -66,12 +80,7 @@ const TodoScreen = (props) => {
             <FlatList
                 data={todos}
                 keyExtractor={item => 'key' + item.id}
-                renderItem={({ item }) => (
-                    <RenderListItem
-                        item={item}
-                        onDelete={handleDelete}
-                    />
-                )}
+                renderItem={handleRenderItem}
                 initialNumToRender={20}
                 maxToRenderPerBatch={30}
                 refreshing={refreshing}
@@ -80,15 +89,17 @@ const TodoScreen = (props) => {
                 onRefresh={() => loadTodos(setRefreshing)}
                 ListEmptyComponent={ListEmptyComponent}
                 ItemSeparatorComponent={ListItemSeparator}
-                ListHeaderComponent={<ListHeader title="Todo List" />}
+                ListHeaderComponent={<ListHeader title={Strings.todoScreenFlatlistHeaderTitle} />}
             />
         </View>
     );
 };
 
 TodoScreen.navigationOptions = ({ navigation }) => {
+    const loading = navigation.getParam('loading');
+
     return {
-        title: 'Todos',
+        title: Strings.todoScreenNavTitle,
         headerLeft: (
             <HeaderButton
                 icon={menuIcon}
@@ -101,6 +112,7 @@ TodoScreen.navigationOptions = ({ navigation }) => {
             <HeaderButton
                 icon={plusIcon}
                 size={20}
+                loading={loading}
                 color={Colors.secondary}
                 onPress={() => navigation.navigate('AddTodo')}
             />

@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { View, StyleSheet, FlatList, Alert } from 'react-native';
 
-import Colors from '../../constants/Colors';
-import { timeDelay } from '../../constants/Config';
+import { Colors, Config, Strings } from '../../constants/';
 import { menuIcon, plusIcon } from '../../constants/Icons';
 import { fetchPosts, deletePost } from '../../store/actions/posts';
 import {
@@ -15,24 +14,24 @@ import {
     ListEmptyComponent
 } from '../../components/ui';
 
-const postsScreen = (props) => {
+const PostScreen = (props) => {
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
 
-    const updated = useSelector(state => state.posts.updated);
     const posts = useSelector(state => state.posts.posts);
+    const updatedAt = useSelector(state => state.posts.updatedAt);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const delay = (Date.now() - updated) / 1000;
-        if (posts.length > 0 && delay <= timeDelay) return;
+        const delay = (Date.now() - updatedAt) / 1000;
+        if (posts.length > 0 && delay <= Config.timeDelay) return;
 
         loadPosts(setLoading);
     }, [dispatch]);
 
-    useEffect(()=>{
+    useEffect(() => {
         props.navigation.setParams({ loading: deleteLoading });
     }, [deleteLoading]);
 
@@ -42,11 +41,19 @@ const postsScreen = (props) => {
         callback(false);
     };
 
+    const handleRenderItem = ({ item }) => (
+        <RenderListItem
+            loading={deleteLoading}
+            item={item}
+            onDelete={handleDelete}
+        />
+    );
+
     const handleDelete = id => {
-        Alert.alert('Are u sure?', 'press ok if you really want to delete', [
-            { text: 'No', style: "default" },
+        Alert.alert(Strings.deleteAlertTitle, Strings.deleteAlertInstruction, [
+            { text: Strings.no, style: "default" },
             {
-                text: 'Yes',
+                text: Strings.yes,
                 style: "destructive",
                 onPress: async () => {
                     setDeleteLoading(true);
@@ -65,13 +72,7 @@ const postsScreen = (props) => {
             <FlatList
                 data={posts}
                 keyExtractor={item => 'key' + item.id}
-                renderItem={({ item }) => (
-                    <RenderListItem
-                        loading={deleteLoading}
-                        item={item}
-                        onDelete={handleDelete}
-                    />
-                )}
+                renderItem={handleRenderItem}
                 initialNumToRender={12}
                 maxToRenderPerBatch={15}
                 refreshing={refreshing}
@@ -79,17 +80,17 @@ const postsScreen = (props) => {
                 onRefresh={() => loadPosts(setRefreshing)}
                 ListEmptyComponent={ListEmptyComponent}
                 ItemSeparatorComponent={ListItemSeparator}
-                ListHeaderComponent={<ListHeader title="Posts List" />}
+                ListHeaderComponent={<ListHeader title={Strings.postScreenFlatlistHeaderTitle} />}
             />
         </View>
     );
 };
 
-postsScreen.navigationOptions = ({ navigation }) => {
+PostScreen.navigationOptions = ({ navigation }) => {
     const loading = navigation.getParam('loading');
 
     return {
-        title: 'Posts',
+        title: Strings.postScreenNavTitle,
         headerLeft: (
             <HeaderButton
                 icon={menuIcon}
@@ -120,4 +121,5 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10
     }
 });
-export default postsScreen;
+
+export default PostScreen;

@@ -1,8 +1,14 @@
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import {
+    View,
+    Text,
+    StyleSheet,
+    TouchableOpacity,
+    ActivityIndicator
+} from 'react-native';
 
-import Colors from '../../constants/Colors';
+import { Colors, Fonts } from '../../constants/';
 
 const ButtonWithIcon = ({ title, loading, icon, style, ...rest }) => {
 
@@ -39,16 +45,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: Colors.primary,
-        padding: 16,
+        height: 58,
         borderRadius: 8,
         marginTop: 20
     },
     buttonText: {
-        fontFamily: 'open-sans-bold',
+        fontFamily: Fonts.bold,
         color: Colors.secondary,
         textAlign: 'center',
         fontSize: 18,
-        fontWeight: 'bold',
         marginRight: 10
     }
 });

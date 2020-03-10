@@ -2,7 +2,7 @@ import * as actions from '../actions';
 
 const initialState = {
     todos: [],
-    updated: 0
+    updatedAt: 0
 };
 
 const todoReducer = (state = initialState, action) => {

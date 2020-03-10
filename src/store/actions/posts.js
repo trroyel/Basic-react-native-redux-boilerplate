@@ -67,7 +67,7 @@ export const deletePost = id => {
                     id: id
                 })
             } else {
-                return Promise.reject(response.status)
+                return Promise.reject(response.status);
             }
         } catch (error) {
             showToast(error.message);

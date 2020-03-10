@@ -1,16 +1,25 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import Colors from '../../constants/Colors';
+
+import { Colors, Fonts } from '../../constants/';
 
 const RenderListItem = ({ item, onDelete, loading }) => (
     <View style={styles.container}>
         <Text style={styles.left}>{item.id}</Text>
-        <Text style={styles.middle} numberOfLines={1} ellipsizeMode='tail'>{item.title}</Text>
+
+        <Text style={styles.middle}
+            numberOfLines={1}
+            ellipsizeMode='tail'>
+            {item.title}
+        </Text>
+
         <TouchableOpacity
             disabled={loading}
             style={styles.right}
             onPress={() => onDelete(item.id)}>
+
             <Text style={styles.rightText}>x</Text>
+
         </TouchableOpacity>
     </View>
 );
@@ -39,7 +48,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     rightText: {
-        fontFamily: 'semi-bold',
+        fontFamily: Fonts.bold,
         fontSize: 25,
         color: Colors.primary
     }
