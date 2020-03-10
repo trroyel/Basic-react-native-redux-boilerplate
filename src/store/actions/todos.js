@@ -1,5 +1,5 @@
 import * as actions from './index';
-import Routes from '../../constants/Routes';
+import Routes from '../../constants/ApiRoutes';
 import { showToast } from '../../helpers/ToastHelper';
 import * as ApiCaller from '../../helpers/ApiCaller';
 

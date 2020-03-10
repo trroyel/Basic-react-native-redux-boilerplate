@@ -3,15 +3,13 @@ import { Image } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 
 import { postIcon } from '../constants/Icons';
-import PostScreen from '../screens/posts/PostScreen';
-import AddPostScreen from '../screens/posts/AddPostScreen';
-import PostPreviewScreen from '../screens/posts/PostPreviewScreen';
+import AuthScreen from '../screens/auth/AuthScreen';
+import ProfileScreen from '../screens/auth/ProfileScreen';
 import DefaultNavigationOption from './DefaultNavigationOption';
 
-const PostNavigator = createStackNavigator({
-    PostsHome: PostScreen,
-    AddPost: AddPostScreen,
-    PostPreview: PostPreviewScreen
+const AuthNavigator = createStackNavigator({
+    AuthHome: AuthScreen,
+    Profile: ProfileScreen
 }, {
     navigationOptions: {
         drawerIcon: ({ tintColor }) => (
@@ -24,4 +22,4 @@ const PostNavigator = createStackNavigator({
     defaultNavigationOptions: DefaultNavigationOption
 });
 
-export default PostNavigator;
+export default AuthNavigator;

@@ -7,7 +7,7 @@ import DefaultNavigationOption from './DefaultNavigationOption';
 import { homeIcon } from '../constants/Icons';
 
 const HomeNavigator = createStackNavigator({
-    Home: HomeScreen
+    HomePage: HomeScreen
 }, {
     navigationOptions: {
         drawerIcon: ({ tintColor }) => (

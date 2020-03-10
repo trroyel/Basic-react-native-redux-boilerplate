@@ -9,7 +9,7 @@ import DefaultNavigationOption from './DefaultNavigationOption';
 
 
 const TodoNavigator = createStackNavigator({
-    Todos: TodoScreen,
+    TodosHome: TodoScreen,
     AddTodo: AddTodoScreen
 }, {
     navigationOptions: {

@@ -1,5 +1,6 @@
 const en = {
     add: 'ADD',
+    update: 'UPDATE',
     yes: 'Yes',
     no: 'No',
     deleteAlertTitle: 'Do you want to delete',
@@ -22,6 +23,22 @@ const en = {
 
     todoScreenFlatlistHeaderTitle: 'Todos List',
     todoScreenNavTitle: 'Todos',
+
+    signin: 'SignIn',
+    login: 'Login',
+    authScreenNavTitle: 'Authenticate',
+    authScreenEmailInputLabel: 'Enter email.',
+    authScreenEmailInputPlaceholder: 'User email',
+    authScreenPasswordInputLabel: 'Enter password',
+    authScreenPasswordInputPlaceholder: 'User password',
+
+    profileScreenNavTitle: 'Profile',
+    profileScreenAddressInputLabel: 'Enter address.',
+    profileScreenAddressInputPlaceholder: 'Your address',
+    profileScreenAgeInputLabel: 'Enter age',
+    profileScreenAgeInputPlaceholder: 'User age',
+    profileScreenMobileInputLabel: 'Enter mobile',
+    profileScreenMobileInputPlaceholder: 'User mobile',
 }
 
 export default en;

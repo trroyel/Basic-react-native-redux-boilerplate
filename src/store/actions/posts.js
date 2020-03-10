@@ -1,7 +1,20 @@
 import * as actions from './index';
-import Routes from '../../constants/Routes';
+import Routes from '../../constants/ApiRoutes';
 import { showToast } from '../../helpers/ToastHelper';
 import * as ApiCaller from '../../helpers/ApiCaller';
+
+// export const addPost = ()=>{
+//     return {
+
+//     };
+// };
+
+export const setPreviewPost = data =>{
+    return {
+        type: actions.SET_PREVIEW_POST_SUCCESS,
+        post: data
+    };
+};
 
 export const fetchPosts = () => {
     return async dispatch => {

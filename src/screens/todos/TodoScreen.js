@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { View, StyleSheet, FlatList, Alert } from 'react-native';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
-import { Colors, Config, Strings } from '../../constants/';
-import { menuIcon, plusIcon } from '../../constants/Icons';
 import { fetchTodos, deleteTodo } from '../../store/actions/todos';
+import { Colors, Config, Strings, AppRoutes } from '../../constants/';
+
 import {
     ListHeader,
     HeaderButton,
@@ -101,21 +102,22 @@ TodoScreen.navigationOptions = ({ navigation }) => {
     return {
         title: Strings.todoScreenNavTitle,
         headerLeft: (
-            <HeaderButton
-                icon={menuIcon}
-                size={24}
-                color={Colors.secondary}
-                onPress={() => navigation.toggleDrawer()}
-            />
+            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                <Item
+                    title="menu"
+                    iconName="md-menu"
+                    onPress={() => navigation.toggleDrawer()}
+                />
+            </HeaderButtons>
         ),
         headerRight: (
-            <HeaderButton
-                icon={plusIcon}
-                size={20}
-                loading={loading}
-                color={Colors.secondary}
-                onPress={() => navigation.navigate('AddTodo')}
-            />
+            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                <Item
+                    title="menu"
+                    iconName={loading ? 'md-radio-button-off' : 'md-add'}
+                    onPress={() => navigation.navigate(AppRoutes.AddTodo)}
+                />
+            </HeaderButtons>
         )
     }
 };

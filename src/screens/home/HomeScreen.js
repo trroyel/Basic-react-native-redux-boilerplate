@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+
 import { HeaderButton } from '../../components/ui';
-import Colors from '../../constants/Colors';
-import { menuIcon } from '../../constants/Icons';
 
 const HomeScreen = (props) => {
     return (
@@ -16,12 +16,13 @@ HomeScreen.navigationOptions = ({ navigation }) => {
     return {
         title: "Home",
         headerLeft: (
-            <HeaderButton
-                icon={menuIcon}
-                size={24}
-                color={Colors.secondary}
-                onPress={() => navigation.toggleDrawer()}
-            />
+            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                <Item
+                    title="menu"
+                    iconName="md-menu"
+                    onPress={() => navigation.toggleDrawer()}
+                />
+            </HeaderButtons>
         )
     };
 };

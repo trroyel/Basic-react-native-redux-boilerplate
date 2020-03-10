@@ -2,7 +2,8 @@ import * as actions from '../actions';
 
 const initialState = {
     posts: [],
-    updatedAt: 0
+    updatedAt: 0,
+    previewPost: null,
 };
 
 const postReducer = (state = initialState, action) => {
@@ -11,7 +12,7 @@ const postReducer = (state = initialState, action) => {
             return {
                 ...state,
                 posts: action.posts,
-                updated: Date.now()
+                updatedAt: Date.now()
             };
         };
         case actions.ADD_POST: {
@@ -40,6 +41,13 @@ const postReducer = (state = initialState, action) => {
                 ...state,
                 posts: posts
             }
+        };
+
+        case actions.SET_PREVIEW_POST_SUCCESS: {
+            return {
+                ...state,
+                previewPost: action.post
+            };
         };
 
         default: return state;

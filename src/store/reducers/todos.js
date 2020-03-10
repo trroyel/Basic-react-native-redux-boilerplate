@@ -11,7 +11,7 @@ const todoReducer = (state = initialState, action) => {
             return {
                 ...state,
                 todos: action.todos,
-                updated: Date.now()
+                updatedAt: Date.now()
             };
         };
         case actions.ADD_TODO: {
