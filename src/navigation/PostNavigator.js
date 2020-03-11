@@ -6,12 +6,16 @@ import { postIcon } from '../constants/Icons';
 import PostScreen from '../screens/posts/PostScreen';
 import AddPostScreen from '../screens/posts/AddPostScreen';
 import PostPreviewScreen from '../screens/posts/PostPreviewScreen';
+import AuthScreen from '../screens/auth/AuthScreen';
+import AddProfileScreen from '../screens/auth/AddProfileScreen';
 import DefaultNavigationOption from './DefaultNavigationOption';
 
 const PostNavigator = createStackNavigator({
     PostsHome: PostScreen,
     AddPost: AddPostScreen,
-    PostPreview: PostPreviewScreen
+    PostPreview: PostPreviewScreen,
+    PostAddProfile: AddProfileScreen,
+    PostAuthenticate: AuthScreen
 }, {
     navigationOptions: {
         drawerIcon: ({ tintColor }) => (

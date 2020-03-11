@@ -3,12 +3,6 @@ import Routes from '../../constants/ApiRoutes';
 import { showToast } from '../../helpers/ToastHelper';
 import * as ApiCaller from '../../helpers/ApiCaller';
 
-// export const addPost = ()=>{
-//     return {
-
-//     };
-// };
-
 export const setPreviewPost = data =>{
     return {
         type: actions.SET_PREVIEW_POST_SUCCESS,
@@ -38,7 +32,7 @@ export const addPost = payload => {
     return async dispatch => {
         try {
             const response = await ApiCaller.post(Routes.posts, payload);
-            if (!response.ok) return Promise.reject(response.status);
+            if (!response.ok) throw Error(response.status);
 
             const post = await response.json();
 
@@ -48,6 +42,7 @@ export const addPost = payload => {
             })
         } catch (error) {
             showToast(error.message);
+            return;
         }
     };
 };
@@ -56,7 +51,7 @@ export const updatePost = (id, payload) => {
     return async dispatch => {
         try {
             const response = await ApiCaller.put(Routes.posts, id, payload);
-            if (!response.ok) return Promise.reject(response.status);
+            if (!response.ok) throw Error(response.status);
 
             const updatedPost = await response.json();
 
@@ -80,7 +75,7 @@ export const deletePost = id => {
                     id: id
                 })
             } else {
-                return Promise.reject(response.status);
+                throw Error(response.status);
             }
         } catch (error) {
             showToast(error.message);

@@ -1,10 +1,9 @@
 import AsyncStorage from '@react-native-community/async-storage';
 
 import * as actions from './index';
-import Routes from '../../constants/ApiRoutes';
 import { showToast } from '../../helpers/ToastHelper';
 
-// const readTextToFile = () => {
+// const readJsonObjectToFile = () => {
 //     return new Promise((resolve, reject) => {
 //         try {
 //             const result = fs.readFileSync('./data.json', 'utf-8');
@@ -15,7 +14,7 @@ import { showToast } from '../../helpers/ToastHelper';
 //     });
 // };
 
-// const writeTextToFile = (data) => {
+// const writeJsonObjectToFile = (data) => {
 //     return new Promise((resolve, reject) => {
 //         try {
 //             fs.writeFileSync('./data.json', JSON.stringify(data, null, 2), 'utf-8');
@@ -26,12 +25,33 @@ import { showToast } from '../../helpers/ToastHelper';
 //     });
 // };
 
+//Fake promise to make asynchrounous
+const customPromise = () => {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve('Timer is out');
+        }, 2000);
+    });
+};
+
+export const setNextRoute = route => {
+    return {
+        type: actions.SET_NEXT_ROUTE_SUCCESS,
+        route: route
+    };
+};
+
+export const userLogout = () => {
+    return {
+        type: actions.LOGOUT_SUCCESS
+    };
+};
+
 export const userLogin = payload => {
     return async (dispatch, getState) => {
         try {
             const user = getState().auth.user;
-            console.log('User: ', user);
-            
+
             dispatch({
                 type: actions.LOGIN_SUCCESS,
             });
@@ -41,8 +61,10 @@ export const userLogin = payload => {
     };
 };
 
-export const setProfileData = payload =>{
-    return  async dispatch => {
+export const setProfileData = payload => {
+    return async dispatch => {
+        await customPromise();
+
         dispatch({
             type: actions.SET_USER_PROFILE_SUCCESS,
             profile: payload
@@ -53,9 +75,15 @@ export const setProfileData = payload =>{
 export const userSignup = payload => {
     return async dispatch => {
         try {
+            //Fetch custom fake promise
+            await customPromise();
+
             //Check the expiration time from api token
             const expirationTime = new Date(new Date().getTime() + 600000);
             await AsyncStorage.setItem('expirationTime', JSON.stringify(expirationTime));
+
+            //inject the demo userId with email & password
+            payload.userId = 1;
 
             dispatch({
                 type: actions.SIGNUP_SUCCESS,

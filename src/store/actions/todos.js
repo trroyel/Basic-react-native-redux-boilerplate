@@ -7,7 +7,7 @@ export const fetchTodos = () => {
     return async dispatch => {
         try {
             const response = await ApiCaller.get(Routes.todos);
-            if (!response.ok) return Promise.reject(response.status);
+            if (!response.ok) throw Error(response.status);
 
             const todos = await response.json();
 
@@ -25,7 +25,7 @@ export const addTodo = payload => {
     return async dispatch => {
         try {
             const response = await ApiCaller.post(Routes.todos, payload);
-            if (!response.ok) return Promise.reject(response.status);
+            if (!response.ok) throw Error(response.status);
 
             const todo = await response.json();
 
@@ -43,7 +43,7 @@ export const updatetodo = (id, payload) => {
     return async dispatch => {
         try {
             const response = await ApiCaller.put(Routes.todos, id, payload);
-            if (!response.ok) return Promise.reject(response.status);
+            if (!response.ok) throw Error(response.status);
 
             const updatedtodo = response.json();
 
@@ -67,7 +67,7 @@ export const deleteTodo = id => {
                     id: id
                 });
             } else {
-                return Promise.reject(response.status);
+                throw Error(response.status);
             }
         } catch (error) {
             showToast(error.message);

@@ -5,11 +5,13 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { postIcon } from '../constants/Icons';
 import AuthScreen from '../screens/auth/AuthScreen';
 import ProfileScreen from '../screens/auth/ProfileScreen';
+import AddProfileScreen from '../screens/auth/AddProfileScreen';
 import DefaultNavigationOption from './DefaultNavigationOption';
 
 const AuthNavigator = createStackNavigator({
-    AuthHome: AuthScreen,
-    Profile: ProfileScreen
+    ProfileHome: ProfileScreen,
+    Authenticate: AuthScreen,
+    AddProfile: AddProfileScreen
 }, {
     navigationOptions: {
         drawerIcon: ({ tintColor }) => (

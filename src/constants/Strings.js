@@ -1,6 +1,7 @@
 const en = {
     add: 'ADD',
     update: 'UPDATE',
+    save: 'SAVE',
     yes: 'Yes',
     no: 'No',
     deleteAlertTitle: 'Do you want to delete',
@@ -33,12 +34,16 @@ const en = {
     authScreenPasswordInputPlaceholder: 'User password',
 
     profileScreenNavTitle: 'Profile',
+    profileScreenNameInputLabel: 'Enter name.',
+    profileScreenNameInputPlaceholder: 'Your name',
     profileScreenAddressInputLabel: 'Enter address.',
     profileScreenAddressInputPlaceholder: 'Your address',
     profileScreenAgeInputLabel: 'Enter age',
     profileScreenAgeInputPlaceholder: 'User age',
     profileScreenMobileInputLabel: 'Enter mobile',
     profileScreenMobileInputPlaceholder: 'User mobile',
+
+    postPreviewScreenNavTitle: 'Preview Post'
 }
 
 export default en;

@@ -3,7 +3,7 @@ import * as actions from '../actions';
 const initialState = {
     posts: [],
     updatedAt: 0,
-    previewPost: null,
+    previewPost: {},
 };
 
 const postReducer = (state = initialState, action) => {
@@ -18,7 +18,8 @@ const postReducer = (state = initialState, action) => {
         case actions.ADD_POST: {
             return {
                 ...state,
-                posts: state.posts.concat(action.post)
+                posts: state.posts.concat(action.post),
+                previewPost: {}
             };
         };
         case actions.DELETE_POST: {

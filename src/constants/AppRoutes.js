@@ -6,12 +6,15 @@ export default {
     PostsHome: 'PostsHome',
     AddPost: 'AddPost',
     PostPreview: 'PostPreview',
+    PostAuthenticate: 'PostAuthenticate',
+    PostAddProfile: 'PostAddProfile',
 
     Todos: 'Todos',
     TodosHome: 'TodosHome',
     AddTodo: 'AddTodo',
 
     Users: 'Users',
-    AuthHome: 'AuthHome',
-    Profile: 'Profile'
+    Authenticate: 'Authenticate',
+    ProfileHome: 'ProfileHome',
+    AddProfile: 'AddProfile'
 };

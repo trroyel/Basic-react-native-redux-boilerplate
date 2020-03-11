@@ -12,7 +12,7 @@ import Colors from '../constants/Colors';
 const MainNavigator = createDrawerNavigator({
     Home: HomeNavigator,
     Posts: PostNavigator,
-    Todos: TodoNavigator, 
+    //Todos: TodoNavigator, 
     Users: AuthNavigator
 }, {
     unmountInactiveRoutes: true,

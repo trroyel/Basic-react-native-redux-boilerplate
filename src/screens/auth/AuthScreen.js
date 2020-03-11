@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { View, Text, StyleSheet } from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import { postIcon } from '../../constants/Icons';
 import { Strings, AppRoutes } from '../../constants/';
-import { userLogin, userSignup } from '../../store/actions/auth';
+import { userSignup } from '../../store/actions/auth';
 import { InputTextWithIcon, ButtonWithIcon, HeaderButton } from '../../components/ui';
 
 const LoginScreen = props => {
@@ -13,14 +12,21 @@ const LoginScreen = props => {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
 
+    const { userProfile, nextRoute } = useSelector(state => state.auth);
+
     const dispatch = useDispatch();
 
     const handleSubmit = async () => {
         setLoading(true);
         await dispatch(userSignup({ email, password }));
         setLoading(false);
-        props.navigation.navigate(AppRoutes.Profile);
-    }
+
+        if (userProfile === null && nextRoute !== null) {
+            props.navigation.replace(AppRoutes.PostAddProfile);
+        } else {
+            props.navigation.replace(AppRoutes.ProfileHome);
+        }
+    };
 
     return (
         <View style={styles.screen}>
@@ -52,19 +58,8 @@ const LoginScreen = props => {
 };
 
 
-LoginScreen.navigationOptions = ({ navigation }) => {
-    return {
-        title: Strings.authScreenNavTitle,
-        headerLeft: (
-            <HeaderButtons HeaderButtonComponent={HeaderButton}>
-                <Item
-                    title="menu"
-                    iconName="md-menu"
-                    onPress={() => navigation.toggleDrawer()}
-                />
-            </HeaderButtons>
-        )
-    };
+LoginScreen.navigationOptions = {
+    title: Strings.authScreenNavTitle,
 };
 
 const styles = StyleSheet.create({

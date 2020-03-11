@@ -1,37 +1,34 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { useDispatch , useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import Strings from '../../constants/Strings';
 import { postIcon } from '../../constants/Icons';
-import { addPost, setPreviewPost } from '../../store/actions/posts';
+import { AppRoutes, Strings } from '../../constants';
+import { setNextRoute } from '../../store/actions/auth';
+import { setPreviewPost } from '../../store/actions/posts';
 import { ButtonWithIcon, InputTextWithIcon } from '../../components/ui';
-import { ApiRoutes, AppRoutes } from '../../constants';
 
 const AddPostScreen = props => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
-    const [loading, setLoading] = useState(false);
 
-    const authData = useSelector(state=> state.auth);
+    const { isAuthenticated, userProfile } = useSelector(state => state.auth);
 
     const dispatch = useDispatch();
 
     const handleSubmit = async () => {
-        // if(authData.isAuthenticated && authData.userProfile !== null){
-        //     setLoading(true);
-        //     await dispatch(addPost({
-        //         userId: 1,
-        //         title: title,
-        //         body: body
-        //     }));
-        //     setLoading(false);
-        //     props.navigation.popToTop();
-        // }else{
+        const { navigate } = props.navigation;
+        dispatch(setPreviewPost({ title, body }));
 
-            dispatch(setPreviewPost({title, body}));
-            props.navigation.navigate(AppRoutes.PostPreview);
-        //}
+        if (isAuthenticated && userProfile !== null) {
+            navigate(AppRoutes.PostPreview);
+        } else if (isAuthenticated && userProfile === null) {
+            dispatch(setNextRoute(AppRoutes.PostPreview));
+            navigate(AppRoutes.PostAddProfile);
+        } else {
+            dispatch(setNextRoute(AppRoutes.PostPreview));
+            navigate(AppRoutes.PostAuthenticate);
+        }
     };
 
     return (
@@ -54,7 +51,6 @@ const AddPostScreen = props => {
             />
 
             <ButtonWithIcon
-                loading={loading}
                 title={Strings.add}
                 icon="md-add"
                 onPress={handleSubmit}

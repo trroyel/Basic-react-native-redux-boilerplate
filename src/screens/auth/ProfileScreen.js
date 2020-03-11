@@ -1,71 +1,126 @@
-import React, { useState } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, Text, Alert } from 'react-native';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
-import { postIcon } from '../../constants/Icons';
-import { Colors, Strings, Fonts, AppRoutes } from '../../constants/';
-import { InputTextWithIcon, ButtonWithIcon } from '../../components/ui';
+import { HeaderButton } from '../../components/ui';
+import { userLogout } from '../../store/actions/auth';
+import { Strings, AppRoutes, Colors, Fonts } from '../../constants/';
 
 const ProfileScreen = props => {
-    const [age, setAge] = useState('');
-    const [mobile, setMobile] = useState('');
-    const [address, setAddress] = useState('');
-    const [loading, setLoading] = useState(false);
 
     const dispatch = useDispatch();
+    const { isAuthenticated, user, userProfile } = useSelector(state => state.auth);
 
-    const handleSubmit = () => {
-        props.navigation.navigate(AppRoutes.Profile);
+    useEffect(() => {
+        props.navigation.setParams({ isAuthenticated, handleAuthStatus });
+    }, [isAuthenticated]);
+
+    const handleAuthStatus = useCallback(() => {
+        if (isAuthenticated) {
+            handleLogout();
+        } else {
+            props.navigation.navigate(AppRoutes.Authenticate);
+        }
+    }, [isAuthenticated, dispatch]);
+
+
+    const handleLogout = () => {
+        Alert.alert(Strings.deleteAlertTitle, Strings.deleteAlertInstruction, [
+            { text: Strings.no, style: "default" },
+            {
+                text: Strings.yes,
+                style: "destructive",
+                onPress: () => dispatch(userLogout())
+            }
+        ]);
     }
 
     return (
-        <ScrollView>
-            <View style={styles.screen}>
-                <InputTextWithIcon
-                    autoFocus
-                    icon={postIcon}
-                    value={address}
-                    label={Strings.profileScreenAddressInputLabel}
-                    placeholder={Strings.profileScreenAddressInputPlaceholder}
-                    onChangeText={setAddress}
-                />
-                <InputTextWithIcon
-                    icon={postIcon}
-                    value={age}
-                    secureTextEntry
-                    label={Strings.profileScreenAgeInputLabel}
-                    placeholder={Strings.profileScreenAgeInputPlaceholder}
-                    onChangeText={setAge}
-                />
-                <InputTextWithIcon
-                    icon={postIcon}
-                    value={mobile}
-                    secureTextEntry
-                    label={Strings.profileScreenMobileInputLabel}
-                    placeholder={Strings.profileScreenMobileInputPlaceholder}
-                    onChangeText={setMobile}
-                />
-                <ButtonWithIcon
-                    loading={loading}
-                    title={Strings.add}
-                    icon="md-add"
-                    onPress={handleSubmit}
-                />
+        <View style={styles.screen}>
+            <Text style={styles.heading}>User Details</Text>
+
+            <Text style={styles.title}>User</Text>
+            <View style={styles.userContainer}>
+                <Text style={styles.text}>Email : {user !== null ? user.email : 'not set'}</Text>
+                <Text style={styles.text}>Password: {user !== null ? user.password : 'not set'}</Text>
             </View>
-        </ScrollView>
+
+            <Text style={styles.title}>Profile</Text>
+            <View style={styles.profileContainer}>
+                <Text style={styles.text}>Name: {userProfile !== null ? userProfile.name : 'not set'}</Text>
+                <Text style={styles.text}>Address: {userProfile !== null ? userProfile.address : 'not set'}</Text>
+                <Text style={styles.text}>Age: {userProfile !== null ? userProfile.age : 'not set'}</Text>
+                <Text style={styles.text}>Mobile: {userProfile !== null ? userProfile.mobile : 'not set'}</Text>
+            </View>
+        </View>
     );
 };
 
 
-ProfileScreen.navigationOptions = {
-    title: Strings.profileScreenNavTitle
+ProfileScreen.navigationOptions = ({ navigation }) => {
+    const isAuthenticated = navigation.getParam('isAuthenticated');
+    const handleAuthStatus = navigation.getParam('handleAuthStatus');
+
+    return {
+        title: Strings.profileScreenNavTitle,
+        headerLeft: (
+            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                <Item
+                    title="menu"
+                    iconName="md-menu"
+                    onPress={() => navigation.toggleDrawer()}
+                />
+            </HeaderButtons>
+        ),
+        headerRight: (
+            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                <Item
+                    title="menu"
+                    iconName={isAuthenticated ? "md-power" : "md-key"}
+                    onPress={() => handleAuthStatus()}
+                />
+            </HeaderButtons>
+        )
+    }
 };
 
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        marginVertical: 20,
-        marginHorizontal: 10
+        marginVertical: 15,
+        marginHorizontal: 15
+    },
+    userContainer: {
+        height: 100,
+        marginBottom: 30,
+        padding: 15,
+        justifyContent: 'center',
+        borderColor: Colors.accent,
+        borderWidth: 1,
+        borderRadius: 8
+    },
+    profileContainer: {
+        height: 150,
+        padding: 15,
+        justifyContent: 'center',
+        borderColor: Colors.accent,
+        borderWidth: 1,
+        borderRadius: 8
+    },
+    heading: {
+        fontFamily: Fonts.bold,
+        fontSize: 22,
+        marginBottom: 10
+    },
+    title: {
+        fontFamily: Fonts.semiBold,
+        fontSize: 18
+    },
+    text: {
+        fontFamily: Fonts.regular,
+        fontSize: 16,
+        marginVertical: 4
     }
 });
 

@@ -65,7 +65,6 @@ const PostScreen = (props) => {
         ]);
     };
 
-
     if (loading) return <LoadingIndicator />
 
     return (
