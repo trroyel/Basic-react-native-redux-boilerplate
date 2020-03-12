@@ -1,7 +1,9 @@
+import _ from 'underscore';
 import * as actions from './index';
 import Routes from '../../constants/ApiRoutes';
 import { showToast } from '../../helpers/ToastHelper';
 import * as ApiCaller from '../../helpers/ApiCaller';
+import {checkObjectEquality} from '../../helpers/utilityFunction';
 
 export const setPreviewPost = data =>{
     return {
@@ -11,17 +13,26 @@ export const setPreviewPost = data =>{
 };
 
 export const fetchPosts = () => {
-    return async dispatch => {
+    return async (dispatch, getState) => {
         try {
             const response = await ApiCaller.get(Routes.posts);
-            if (!response.ok) return Promise.reject(response.status);
+            if (!response.ok) throw Error(response.status);
 
             const posts = await response.json();
+            const prevPosts = getState().posts.posts;
 
-            dispatch({
-                type: actions.FETCH_POSTS,
-                posts: Array.isArray(posts) ? posts : []
-            });
+            const objectIsEqual = _.isEqual(prevPosts, posts);
+            
+            if(objectIsEqual){
+                dispatch({
+                    type: actions.UPDATE_POSTS_FETCH_TIME
+                });
+            }else{
+                dispatch({
+                    type: actions.FETCH_POSTS,
+                    posts: Array.isArray(posts) ? posts : []
+                });
+            }
         } catch (error) {
             showToast(error.message);
         }

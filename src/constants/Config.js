@@ -1,2 +1,2 @@
-export const timeDelay = 30;
+export const timeDelay = 50;
 export const baseUrl = "https://jsonplaceholder.typicode.com";

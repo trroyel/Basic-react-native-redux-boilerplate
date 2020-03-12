@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { View, StyleSheet, FlatList, Alert } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -10,41 +10,45 @@ import {
     ListHeader,
     HeaderButton,
     RenderListItem,
-    LoadingIndicator,
     ListItemSeparator,
     ListEmptyComponent
 } from '../../components/ui';
 
 const PostScreen = (props) => {
+    const isMountedRef = useRef();
+    const dispatch = useDispatch();
+    
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
-    const [deleteLoading, setDeleteLoading] = useState(false);
 
     const posts = useSelector(state => state.posts.posts);
     const updatedAt = useSelector(state => state.posts.updatedAt);
 
-    const dispatch = useDispatch();
-
     useEffect(() => {
+        isMountedRef.current = true;
+
         const delay = (Date.now() - updatedAt) / 1000;
         if (posts.length > 0 && delay <= Config.timeDelay) return;
 
         loadPosts(setLoading);
-    }, [dispatch]);
+
+        return () => isMountedRef.current = false;
+    }, [dispatch, isMountedRef]);
+
 
     useEffect(() => {
-        props.navigation.setParams({ loading: deleteLoading });
-    }, [deleteLoading]);
+        props.navigation.setParams({ loading: loading });
+    }, [loading]);
 
     const loadPosts = async (callback) => {
         callback(true);
         await dispatch(fetchPosts());
-        callback(false);
+        if (isMountedRef.current) callback(false);
     };
 
     const handleRenderItem = ({ item }) => (
         <RenderListItem
-            loading={deleteLoading}
+            loading={loading}
             item={item}
             onDelete={handleDelete}
         />
@@ -57,15 +61,15 @@ const PostScreen = (props) => {
                 text: Strings.yes,
                 style: "destructive",
                 onPress: async () => {
-                    setDeleteLoading(true);
+                    setLoading(true);
+                    console.log('Before: ', isMountedRef.current);
                     await dispatch(deletePost(id));
-                    setDeleteLoading(false);
+                    console.log('After: ', isMountedRef.current);
+                    if (isMountedRef.current) setLoading(false);
                 }
             }
         ]);
     };
-
-    if (loading) return <LoadingIndicator />
 
     return (
         <View style={styles.screen}>

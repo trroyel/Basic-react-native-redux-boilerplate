@@ -1,7 +1,8 @@
 import * as actions from '../actions';
+import postData from '../demoData';
 
 const initialState = {
-    posts: [],
+    posts: [...postData],
     updatedAt: 0,
     previewPost: {},
 };
@@ -12,6 +13,12 @@ const postReducer = (state = initialState, action) => {
             return {
                 ...state,
                 posts: action.posts,
+                updatedAt: Date.now()
+            };
+        };
+        case actions.UPDATE_POSTS_FETCH_TIME: {
+            return {
+                ...state,
                 updatedAt: Date.now()
             };
         };
