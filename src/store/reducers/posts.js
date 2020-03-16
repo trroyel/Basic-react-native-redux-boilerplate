@@ -48,9 +48,8 @@ const postReducer = (state = initialState, action) => {
             return {
                 ...state,
                 posts: posts
-            }
+            };
         };
-
         case actions.SET_PREVIEW_POST_SUCCESS: {
             return {
                 ...state,

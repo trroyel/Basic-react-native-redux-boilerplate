@@ -14,10 +14,10 @@ import {
     ListEmptyComponent
 } from '../../components/ui';
 
-const PostScreen = (props) => {
-    const isMountedRef = useRef();
+const PostScreen = ({navigation}) => {
+    const isMountedRef = useRef(true);
     const dispatch = useDispatch();
-    
+
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
 
@@ -25,20 +25,20 @@ const PostScreen = (props) => {
     const updatedAt = useSelector(state => state.posts.updatedAt);
 
     useEffect(() => {
-        isMountedRef.current = true;
-
+        console.log('UseEffect => 1:', isMountedRef.current);
         const delay = (Date.now() - updatedAt) / 1000;
         if (posts.length > 0 && delay <= Config.timeDelay) return;
 
         loadPosts(setLoading);
 
         return () => isMountedRef.current = false;
-    }, [dispatch, isMountedRef]);
-
+    }, []);
 
     useEffect(() => {
-        props.navigation.setParams({ loading: loading });
-    }, [loading]);
+        console.log('useEffect => 2: ', isMountedRef.current)
+        navigation.setParams({ loading: loading });
+
+    }, [loading, dispatch]);
 
     const loadPosts = async (callback) => {
         callback(true);

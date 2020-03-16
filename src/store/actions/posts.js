@@ -3,9 +3,9 @@ import * as actions from './index';
 import Routes from '../../constants/ApiRoutes';
 import { showToast } from '../../helpers/ToastHelper';
 import * as ApiCaller from '../../helpers/ApiCaller';
-import {checkObjectEquality} from '../../helpers/utilityFunction';
+import { checkObjectEquality } from '../../helpers/utilityFunction';
 
-export const setPreviewPost = data =>{
+export const setPreviewPost = data => {
     return {
         type: actions.SET_PREVIEW_POST_SUCCESS,
         post: data
@@ -22,12 +22,12 @@ export const fetchPosts = () => {
             const prevPosts = getState().posts.posts;
 
             const objectIsEqual = _.isEqual(prevPosts, posts);
-            
-            if(objectIsEqual){
+
+            if (objectIsEqual) {
                 dispatch({
                     type: actions.UPDATE_POSTS_FETCH_TIME
                 });
-            }else{
+            } else {
                 dispatch({
                     type: actions.FETCH_POSTS,
                     posts: Array.isArray(posts) ? posts : []
@@ -41,6 +41,7 @@ export const fetchPosts = () => {
 
 export const addPost = payload => {
     return async dispatch => {
+
         try {
             const response = await ApiCaller.post(Routes.posts, payload);
             if (!response.ok) throw Error(response.status);
